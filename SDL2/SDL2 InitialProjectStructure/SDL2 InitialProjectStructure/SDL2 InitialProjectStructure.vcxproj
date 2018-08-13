@@ -121,6 +121,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commons.h" />
+    <ClInclude Include="Flags.h" />
+    <ClInclude Include="AppStates.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />

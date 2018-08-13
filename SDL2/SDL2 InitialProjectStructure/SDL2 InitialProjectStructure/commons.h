@@ -8,6 +8,8 @@
 #include <SDL.h>
 #include <string>
 
+#include "Flags.h"
+
 #endif // !COMMONS_H_DEFINED
 
 
