@@ -32,6 +32,9 @@ public:
 
 	void setTitle(char*);
 	void setSize(int, int);
+	void setPosition(int, int);
+	void setFlags(Uint32);
+	void setBorders(bool);
 
 private:
 	//Window data
@@ -41,9 +44,12 @@ private:
 	int id;
 	char *title = APP_NAME;
 
-	//Window dimensions
-	int width = 640;
-	int height = 640;
+	int width = 600;
+	int height = 400;
+	int x = 200;
+	int y = 200;
+	Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+	bool bordered = true;
 
 	//Window focus
 	bool mouseFocus;
@@ -74,17 +80,22 @@ Window::Window()
 */
 bool Window::init()
 {
-
 	instance = SDL_CreateWindow(title,
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
+		x,
+		y,
 		width,
 		height,
-		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+		flags
 	);
 
 	if (instance != NULL)
 	{
+		if (bordered) {
+			SDL_SetWindowBordered(instance, SDL_TRUE);
+		}
+		else {
+			SDL_SetWindowBordered(instance, SDL_FALSE);
+		}
 		mouseFocus = true;
 		keyboardFocus = true;
 
@@ -210,8 +221,8 @@ void Window::handleEvent(SDL_Event& e)
 		if (updateCaption)
 		{
 			std::stringstream caption;
-			caption << title << " - ID: " << mWindowID << " MouseFocus:" << ((mMouseFocus) ? "On" : "Off") << " KeyboardFocus:" << ((mKeyboardFocus) ? "On" : "Off");
-			SDL_SetWindowTitle(mWindow, caption.str().c_str());
+			caption << "*DebugMode* " << title << " - ID: " << id << " MouseFocus:" << ((mouseFocus) ? "On" : "Off") << " KeyboardFocus:" << ((keyboardFocus) ? "On" : "Off");
+			SDL_SetWindowTitle(instance, caption.str().c_str());
 		}
 #endif // DEBUG
 
@@ -312,6 +323,19 @@ void Window::setTitle(char *newTitle) {
 void Window::setSize(int w, int h) {
 	height = h;
 	width = w;
+}
+
+void Window::setPosition(int positionX, int positionY) {
+	x = positionX;
+	y = positionY;
+}
+
+void Window::setFlags(Uint32 newFlags) {
+	flags = newFlags;
+}
+
+void Window::setBorders(bool newBordered) {
+	bordered = newBordered;
 }
 
 #endif // !WINDOW_H_INCLUDED

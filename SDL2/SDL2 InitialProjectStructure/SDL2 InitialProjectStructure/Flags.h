@@ -1,7 +1,8 @@
 #ifndef FLAGS_H_DEFINED
 #define FLAGS_H_DEFINED
 
-//#define DEBUG
+#define DEBUG
+
 #define APP_NAME "SDL Application"
 
 /* 
@@ -20,7 +21,7 @@
 #define APP_MAX_WINDOW_NUMBER 1		// Modify to be able to create more than 2 windows
 
 /*
-* Error messages flags (don't modify)
+* Error messages flags
 */
 #define ERR_WINDOW_OVERFLOW "ERROR - Cannot add window: To add more windows to the App first you must to set flag APP_MAX_WINDOW_NUMBER. (Flags.h)\n"
 #define ERR_INDEX_WINDOW "ERROR - You're trying to get a window by invalid index: Verify getWindow() usages.\n"
