@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
 {
 	SDL_Event e;
 	bool running = true;
-	App::getInstance()->getWindows[0].setBorders(false);
 	App::getInstance()->init(); // Init all SDL systems and all windows
 
 	while (running)

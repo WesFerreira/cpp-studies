@@ -36,9 +36,4 @@
   <ItemGroup>
     <None Include="SDL2.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="sdl.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
 </Project>
