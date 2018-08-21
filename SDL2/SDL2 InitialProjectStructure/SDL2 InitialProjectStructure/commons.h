@@ -9,6 +9,9 @@
 #include <string>
 
 #include "Flags.h"
+#include "App.h"
+
+
 
 #endif // !COMMONS_H_DEFINED
 
