@@ -35,12 +35,14 @@ void App::info(int argc, char *argv[]) {
 
 #ifdef DEBUG
 	cout << MSG_DEBUG << endl;
-	cout << "Args Number: " << argc << endl;
+	cout << "\{" << endl;
+	cout << "  Args Number: " << argc << endl;
 
 	// Show all args
 	for (int i = 0; argc > i; i++) { 
-		cout << "Arg[" << i << "]: " << argv[i] << endl;
+		cout << "  Arg[" << i << "]: " << argv[i] << endl;
 	}
+	cout << "\}" << endl << endl;
 #else
 	cout << MSG_INFO << endl;
 #endif // !DEBUG

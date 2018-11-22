@@ -1,0 +1,57 @@
+#ifndef REGULAREX_H_INCLUDED
+#define REGULAREX_H_INCLUDED
+
+/*
+	Created by WesFerreira 22/11/2018
+*/
+
+#include <boost/regex.hpp>
+#include <iostream>
+#include <string>
+#include <sstream>
+
+class RegularEx
+{
+public:
+	RegularEx();
+	~RegularEx();
+
+	std::string apply(std::string text, std::string regex);
+private:
+
+};
+
+RegularEx::RegularEx()
+{
+}
+
+RegularEx::~RegularEx()
+{
+}
+
+// Apply RegEx to text and returns match as string
+std::string RegularEx::apply(std::string text, std::string regex) {
+	std::stringstream ss;
+	try {
+		boost::regex r(regex);
+
+		// This holds the first match
+		boost::sregex_iterator currentMatch(text.begin(),
+			text.end(), r);
+
+		// Used to determine if there are any more matches
+		boost::sregex_iterator lastMatch;
+
+		// While the current match doesn't equal the last
+		while (currentMatch != lastMatch) {
+			boost::smatch match = *currentMatch;
+			ss << match.str() << std::endl;
+			currentMatch++;
+		}
+	}
+	catch (boost::regex_error& e) {
+		// Syntax error in the regular expression
+	}
+	return ss.str();
+}
+#endif // !REGULAREX_H_INCLUDED
