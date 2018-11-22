@@ -14,8 +14,7 @@ public:
 	App();
 	~App();
 
-	static void info(int ,char *[]);
-
+	static void info(int, char *[]);
 
 private:
 
@@ -39,7 +38,7 @@ void App::info(int argc, char *argv[]) {
 	cout << "  Args Number: " << argc << endl;
 
 	// Show all args
-	for (int i = 0; argc > i; i++) { 
+	for (int i = 0; argc > i; i++) {
 		cout << "  Arg[" << i << "]: " << argv[i] << endl;
 	}
 	cout << "\}" << endl << endl;

@@ -7,6 +7,7 @@
 #include "RegularEx.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 
 class Rules
 {
@@ -15,8 +16,9 @@ public:
 	~Rules();
 
 	std::string functionNames(std::string text);
+	bool ifExistsInText(std::string find, std::string text);
 private:
-	RegularEx *regex = new RegularEx();
+	RegularEx *regEx = new RegularEx();
 };
 
 Rules::Rules()
@@ -25,10 +27,23 @@ Rules::Rules()
 
 Rules::~Rules()
 {
-	delete regex;
 }
 
 std::string Rules::functionNames(std::string text) {
-	return regex->apply(text, "(\\w+\\s?\\(.*?\\))");
+	return regEx->apply(text, "(\\w+\\s?\\(.*?\\))");
+}
+
+// Check if word exists inside text;
+bool Rules::ifExistsInText(std::string find, std::string text) {
+	std::stringstream ss;
+	ss << "(\\b" << find << "\\b)";
+	regEx->apply(text, ss.str());
+
+	if (regEx->matchCount > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 #endif // !RULES_H_INCLUDED
