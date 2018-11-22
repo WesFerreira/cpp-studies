@@ -17,6 +17,7 @@ public:
 
 	std::string functionNames(std::string text);
 	bool ifExistsInText(std::string find, std::string text);
+	std::string functionBody(std::string functName, std::string text);
 private:
 	RegularEx *regEx = new RegularEx();
 };
@@ -46,4 +47,16 @@ bool Rules::ifExistsInText(std::string find, std::string text) {
 		return false;
 	}
 }
+
+std::string Rules::functionBody(std::string functName, std::string text) {
+	std::stringstream ss;
+	std::string functionStructure;
+
+	// Match function structure inside fullText
+	ss << "(\\b" << functName << "\\b)\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})";
+
+	// Match function body inside function structure mateched
+	return regEx->apply(regEx->apply(text, ss.str()), "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
+}
+
 #endif // !RULES_H_INCLUDED
