@@ -1,13 +1,11 @@
 #ifndef REGULAREX_H_INCLUDED
 #define REGULAREX_H_INCLUDED
-
 /*
 	Created by WesFerreira 22/11/2018
 */
 
 #include <boost/regex.hpp>
 #include <iostream>
-#include <string>
 #include <sstream>
 
 class RegularEx

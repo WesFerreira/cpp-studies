@@ -1,13 +1,14 @@
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
-
 /*
 	Created by WesFerreira 19/11/2018
 */
 
 #include <iostream>
 #include <Windows.h>
-#include "pch.h"
+#include <vector>
+#include <sstream>
+
 using namespace std;
 class App
 {
@@ -17,7 +18,7 @@ public:
 
 	static void info(int, char *[]);
 	static void highlightText(std::string text, const int color);
-
+	static vector<std::string> stringToVector(std::string string);
 private:
 
 };
@@ -25,7 +26,6 @@ private:
 App::App()
 {
 }
-
 App::~App()
 {
 }
@@ -62,6 +62,20 @@ void App:: highlightText(std::string text, const int color)
 	std::cout << text.c_str(); // Print colored text.
 	SetConsoleTextAttribute(hConsole, saved_colors); // Reset default color.
 
+}
+
+vector<std::string> App::stringToVector(std::string string) {
+	std::stringstream ss(string.c_str());
+	std::string s;
+	vector<std::string>list;
+
+	if (string.c_str() != NULL)
+	{
+		while (std::getline(ss, s, '\n')) {
+			list.push_back(s);
+		}
+	}
+	return list;
 }
 
 #endif // !APP_H_INCLUDED

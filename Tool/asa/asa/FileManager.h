@@ -2,7 +2,6 @@
 #ifndef FILEMANAGER_H_INCLUDED
 #define FILEMANAGER_H_INCLUDED
 
-#include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>

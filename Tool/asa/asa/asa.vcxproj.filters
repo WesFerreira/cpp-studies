@@ -41,7 +41,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="asa.cpp">
+    <ClCompile Include="a.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
