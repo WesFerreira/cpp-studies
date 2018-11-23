@@ -18,6 +18,7 @@ public:
 	std::string functionNames(std::string text);
 	bool ifExistsInText(std::string find, std::string text);
 	std::string functionBody(std::string functName, std::string text);
+	std::string matchCDPatch(std::string text);
 private:
 	RegularEx *regEx = new RegularEx();
 };
@@ -57,6 +58,11 @@ std::string Rules::functionBody(std::string functName, std::string text) {
 
 	// Match function body inside function structure mateched
 	return regEx->apply(regEx->apply(text, ss.str()), "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
+}
+
+// Match path after CD command
+std::string Rules::matchCDPatch(std::string text) {
+	return regEx->apply(text, "(?<=\\bcd\\b\\s)(.*)(?!\\n)$");
 }
 
 #endif // !RULES_H_INCLUDED

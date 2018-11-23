@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <Windows.h>
 #include "pch.h"
 using namespace std;
 class App
@@ -15,6 +16,7 @@ public:
 	~App();
 
 	static void info(int, char *[]);
+	static void highlightText(std::string text, const int color);
 
 private:
 
@@ -45,6 +47,21 @@ void App::info(int argc, char *argv[]) {
 #else
 	cout << MSG_INFO << endl;
 #endif // !DEBUG
+}
+
+// HighLight a cout text
+void App:: highlightText(std::string text, const int color)
+{
+	// Get console colors
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO con_info;
+	GetConsoleScreenBufferInfo(hConsole, &con_info);
+	const int saved_colors = con_info.wAttributes;
+
+	SetConsoleTextAttribute(hConsole, color); // Set a color.
+	std::cout << text.c_str(); // Print colored text.
+	SetConsoleTextAttribute(hConsole, saved_colors); // Reset default color.
+
 }
 
 #endif // !APP_H_INCLUDED

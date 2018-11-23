@@ -24,10 +24,16 @@
     <ClInclude Include="FileManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rules.h">
+    <ClInclude Include="RegularEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RegularEx.h">
+    <ClInclude Include="Exec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaWord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
