@@ -33,8 +33,7 @@ App::~App()
 }
 
 void App::info(int argc, char *argv[]) {
-	system("title A.S.A."); // CMD Title
-	//TODO: Add powershell title, after verify what is running.
+	system("title AUTOMA"); // CMD Title
 
 #ifdef DEBUG
 	cout << MSG_DEBUG << endl;

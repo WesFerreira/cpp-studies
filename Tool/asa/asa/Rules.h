@@ -10,13 +10,14 @@
 #include <sstream>
 #include <vector>
 
+// RegEx rules
 class Rules : RegularEx
 {
 public:
 	// Nested Class
 	class function : RegularEx {
 	public:
-		std::string body(std::string, std::string);
+		void body(std::string, std::string);
 		void checkForArgs(std::string);
 
 	private:
@@ -26,7 +27,7 @@ public:
 	class file : RegularEx {
 	friend class Rules;
 	public:
-		std::string functionNames(std::string);
+		void functionNames(std::string);
 
 	private:
 	} file;
@@ -36,9 +37,8 @@ private:
 
 ///////////////////////////////////////////////// FUNCTION /////////////////////////////////////////////////
 
-
-
-std::string Rules::function::body(std::string functName, std::string mainText) {
+// Sets the function body.
+void Rules::function::body(std::string functName, std::string mainText) {
 	std::stringstream ss;
 	std::string functionStructure;
 
@@ -46,24 +46,24 @@ std::string Rules::function::body(std::string functName, std::string mainText) {
 	ss << "(\\b" << functName << "\\b)\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})";
 	std::string fullFunctionStruct = apply(mainText, ss.str());
 
-
 	// Match function body inside function structure mateched
-	return apply(fullFunctionStruct, "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
+	Obj::getInstance()->function.body = apply(fullFunctionStruct, "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
 }
-
-void Rules::function::checkForArgs(std::string rawName) {
+// Sets the function args if it has.
+void Rules::function::checkForArgs(std::string functionNames) {
 	Obj::getInstance()->function.args.clear(); // Reset for new query
-	// Make a vector of all args matcheds inside rawName
-	Obj::getInstance()->function.args = App::stringToVector(apply(rawName, "\\$([a-zA-Z_][a-zA-Z0-9_]*)"));
+
+	// Make a vector of all args matcheds inside functionNames
+	Obj::getInstance()->function.args = App::stringToVector(apply(functionNames, "\\$([a-zA-Z_][a-zA-Z0-9_]*)"));
 }
 
 
 
 ///////////////////////////////////////////////// FILE /////////////////////////////////////////////////
 
-// Match all function names in the file. (with or without args)
-std::string Rules::file::functionNames(std::string mainText) {
-	return apply(mainText, "(\\w+\\s?\\(.*?\\))");
+// Sets all function names. (with or without args)
+void Rules::file::functionNames(std::string mainText) {
+	Obj::getInstance()->file.functionNames = apply(mainText, "(\\w+\\s?\\(.*?\\))");
 }
 
 
