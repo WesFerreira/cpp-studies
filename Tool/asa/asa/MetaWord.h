@@ -8,13 +8,15 @@
 #include <string>
 #include <direct.h>
 #include <algorithm>
+#include "RegularEx.h"
 
-class MetaWord
+class MetaWord : RegularEx
 {
 public:
 	MetaWord();
 	~MetaWord();
-	void metaCD(std::string path);
+	void metaCD(std::string);
+	std::string matchCDPatch(std::string);
 private:
 
 };
@@ -33,6 +35,12 @@ void MetaWord::metaCD(std::string path) {
 
 	App::highlightText("New dirPath: ", 11);
 	App::highlightText(path + "\n", 14);
+}
+
+
+// Match path after CD command
+std::string MetaWord::matchCDPatch(std::string text) {
+	return apply(text, "(?<=\\bcd\\b\\s)(.*)(?!\\n)$");
 }
 
 #endif // !METAWORD_H_INCLUDED

@@ -6,16 +6,16 @@
 #include <sstream>
 #include <vector>
 #include <iostream>
+#include <stdlib.h>
 
 class FileManager
 {
 public:
-	int read();
+	std::string read();
 	int editLine(std::vector <int>, std::vector <std::string>);
 	void verbose();
 	FileManager(std::string);
 
-	std::string getTempText();
 private:
 	std::string fileName;
 	int lineNumber = 0;
@@ -26,22 +26,27 @@ FileManager::FileManager(std::string fileName) {
 	FileManager::fileName = fileName;
 }
 
-int FileManager::read() {
+std::string FileManager::read() {
 	std::string line;
 	std::ifstream myFileI(FileManager::fileName);
 
 	if (myFileI.is_open()) {
+		std::stringstream streamTempText;
+
 		while (std::getline(myFileI, line)) {
 			FileManager::lineNumber++;
 
 			FileManager::tempText.insert(FileManager::tempText.end(), line);
+
+			streamTempText << FileManager::tempText[lineNumber - 1] << std::endl;
 		}
 
 		myFileI.close();
+		return streamTempText.str();
 	}
 	else {
 		std::cout << "Unable to Read file." << std::endl;
-		return 0;
+		exit(-1);
 	}
 }
 
@@ -61,7 +66,7 @@ int FileManager::editLine(std::vector <int> line, std::vector <std::string> text
 	}
 	else
 	{
-		std::cout << "Unable to Write file." << std::endl;
+		std::cout << "Unable to Write file: " << fileName << std::endl;
 		return 0;
 	}
 }
@@ -77,19 +82,4 @@ void FileManager::verbose() {
 		exit;
 	}
 }
-
-/*
-* GETTERS & SETTERS
-*/
-std::string FileManager::getTempText() {
-	std::stringstream ss;
-
-	for (int i = 0; i < tempText.size(); i++) {
-		ss << tempText[i] << std::endl;
-	}
-
-	return ss.str();
-}
-
-
 #endif // !FILEMANAGER_H_INCLUDED

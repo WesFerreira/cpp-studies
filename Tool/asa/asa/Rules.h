@@ -5,90 +5,70 @@
 */
 
 #include "RegularEx.h"
+#include "Obj.h"
 #include <iostream>
 #include <sstream>
 #include <vector>
 
-class Rules
+class Rules : RegularEx
 {
 public:
-	struct functions
-	{
+	// Nested Class
+	class function : RegularEx {
 	public:
-		
+		std::string body(std::string, std::string);
+		void checkForArgs(std::string);
+
 	private:
-	} functions;
+	} function;
 
-	Rules();
-	~Rules();
+	// Nested Class
+	class file : RegularEx {
+	friend class Rules;
+	public:
+		std::string functionNames(std::string);
 
-	std::string functionName(std::string text);
-	bool ifExistsInText(std::string find, std::string text);
-	std::string functionBody(std::string functName, std::string text);
-	std::string matchCDPatch(std::string text);
-	vector<std::string> checkForArgs(std::string rawName);
+	private:
+	} file;
 
-	int argCount;
 private:
-	RegularEx *regEx = new RegularEx();
 };
 
-Rules::Rules()
-{
-}
+///////////////////////////////////////////////// FUNCTION /////////////////////////////////////////////////
 
-Rules::~Rules()
-{
-}
 
-std::string Rules::functionName(std::string text) {
-	return regEx->apply(text, "(\\w+\\s?\\(.*?\\))");
-}
 
-// Check if word exists inside text;
-bool Rules::ifExistsInText(std::string find, std::string text) {
-	std::stringstream ss;
-	ss << "(\\b" << find << "\\b)";
-	regEx->apply(text, ss.str());
-
-	if (regEx->matchCount > 0) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-std::string Rules::functionBody(std::string functName, std::string text) {
+std::string Rules::function::body(std::string functName, std::string mainText) {
 	std::stringstream ss;
 	std::string functionStructure;
 
 	// Match function full structure inside fullText
 	ss << "(\\b" << functName << "\\b)\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})";
-	std::string fullFunctionStruct = regEx->apply(text, ss.str());
+	std::string fullFunctionStruct = apply(mainText, ss.str());
 
-	// Check if function has args
-	vector<std::string> argList = this->checkForArgs(fullFunctionStruct);
-	
 
 	// Match function body inside function structure mateched
-	return regEx->apply(fullFunctionStruct, "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
+	return apply(fullFunctionStruct, "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
 }
 
-// Match path after CD command
-std::string Rules::matchCDPatch(std::string text) {
-	return regEx->apply(text, "(?<=\\bcd\\b\\s)(.*)(?!\\n)$");
-}
-
-vector<std::string> Rules::checkForArgs(std::string rawName) {
+void Rules::function::checkForArgs(std::string rawName) {
+	Obj::getInstance()->function.args.clear(); // Reset for new query
 	// Make a vector of all args matcheds inside rawName
-	vector<std::string> argList = App::stringToVector(regEx->apply(rawName, "\\$([a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)"));
-
-	if (argList.size() > 0) {
-		argCount = 0; // Reset for new query
-		argCount = argList.size();
-	}
-	return argList;
+	Obj::getInstance()->function.args = App::stringToVector(apply(rawName, "\\$([a-zA-Z_][a-zA-Z0-9_]*)"));
 }
+
+
+
+///////////////////////////////////////////////// FILE /////////////////////////////////////////////////
+
+// Match all function names in the file. (with or without args)
+std::string Rules::file::functionNames(std::string mainText) {
+	return apply(mainText, "(\\w+\\s?\\(.*?\\))");
+}
+
+
+
+///////////////////////////////////////////////// GENERAL /////////////////////////////////////////////////
+
 
 #endif // !RULES_H_INCLUDED

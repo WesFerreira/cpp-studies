@@ -36,8 +36,8 @@ void Exec::commandLines(std::string commandLines) {
 	while (std::getline(sStream, line)) {
 		if (!line.empty()) {
 			const char *cLineChar = line.c_str();
-			if (rule->ifExistsInText("cd", line)) {
-				word->metaCD(rule->matchCDPatch(line));
+			if (App::ifExistsInText("cd", line)) {
+				word->metaCD(word->matchCDPatch(line));
 			}
 			else
 			{
@@ -50,4 +50,6 @@ void Exec::commandLines(std::string commandLines) {
 		}
 	}
 }
+
+
 #endif // !EXEC_H_INCLUDED

@@ -4,28 +4,23 @@
 	Created by WesFerreira 22/11/2018
 */
 
-#include <boost/regex.hpp>
+#include <boost/regex.hpp> // To use PCRE rules
 #include <iostream>
 #include <sstream>
 
 class RegularEx
 {
 public:
+private:
+protected:
 	RegularEx();
-	~RegularEx();
 
 	std::string apply(std::string text, std::string regex);
 
 	int matchCount = 0;
-
-private:
 };
 
 RegularEx::RegularEx()
-{
-}
-
-RegularEx::~RegularEx()
 {
 }
 

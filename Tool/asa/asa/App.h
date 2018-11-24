@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <vector>
 #include <sstream>
+#include <regex>
 
 using namespace std;
 class App
@@ -17,8 +18,9 @@ public:
 	~App();
 
 	static void info(int, char *[]);
-	static void highlightText(std::string text, const int color);
-	static vector<std::string> stringToVector(std::string string);
+	static void highlightText(std::string, const int);
+	static vector<std::string> stringToVector(std::string);
+	static bool ifExistsInText(std::string, std::string);
 private:
 
 };
@@ -76,6 +78,43 @@ vector<std::string> App::stringToVector(std::string string) {
 		}
 	}
 	return list;
+}
+
+// Check if word exists inside text using native regex.
+bool App::ifExistsInText(std::string find, std::string text) {
+	int matchCount = 0;
+	std::stringstream ss;
+	ss << "(\\b" << find << "\\b)";
+
+	try {
+		std::regex r(ss.str());
+
+		// This holds the first match
+		std::sregex_iterator currentMatch(text.begin(), text.end(), r);
+
+		// Used to determine if there are any more matches
+		std::sregex_iterator lastMatch;
+
+		// While the current match doesn't equal the last
+		while (currentMatch != lastMatch) {
+			smatch match = *currentMatch;
+			currentMatch++;
+			matchCount++;
+		}
+	}
+	catch (std::regex_error& e) {
+		// Syntax error in the regular expression
+		std::cout << ERR_REGEX << ss.str() << endl;
+		std::cout << e.what() << endl;
+		exit;
+	}
+
+	if (matchCount > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 #endif // !APP_H_INCLUDED

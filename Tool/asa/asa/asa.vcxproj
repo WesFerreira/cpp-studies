@@ -159,6 +159,7 @@
     <ClInclude Include="Exec.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="MetaWord.h" />
+    <ClInclude Include="Obj.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RegularEx.h" />
     <ClInclude Include="Rules.h" />
