@@ -16,6 +16,7 @@ protected:
 	RegularEx();
 
 	std::string apply(std::string text, std::string regex);
+	std::string apply(std::string text, std::stringstream regex);
 
 	int matchCount = 0;
 };
@@ -54,4 +55,6 @@ std::string RegularEx::apply(std::string text, std::string regex) {
 	}
 	return ss.str();
 }
+
+
 #endif // !REGULAREX_H_INCLUDED

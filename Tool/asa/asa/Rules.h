@@ -7,19 +7,17 @@
 #include "RegularEx.h"
 #include "Obj.h"
 #include <iostream>
-#include <sstream>
 #include <vector>
 
 // RegEx rules
-class Rules : RegularEx
+class Rules
 {
 public:
 	// Nested Class
 	class function : RegularEx {
 	public:
 		void body(std::string, std::string);
-		void checkForArgs(std::string);
-
+		void checkForArgs(std::string, std::string);
 	private:
 	} function;
 
@@ -39,22 +37,26 @@ private:
 
 // Sets the function body.
 void Rules::function::body(std::string functName, std::string mainText) {
-	std::stringstream ss;
 	std::string functionStructure;
 
 	// Match function full structure inside fullText
-	ss << "(\\b" << functName << "\\b)\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})";
-	std::string fullFunctionStruct = apply(mainText, ss.str());
+	std::string fullFunctionStruct = apply(mainText, "(\\b" + functName + "\\b)\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})");
 
 	// Match function body inside function structure mateched
 	Obj::getInstance()->function.body = apply(fullFunctionStruct, "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
 }
-// Sets the function args if it has.
-void Rules::function::checkForArgs(std::string functionNames) {
+// Sets the function rawName and args if it has.
+void Rules::function::checkForArgs(std::string name, std::string functionNames) {
 	Obj::getInstance()->function.args.clear(); // Reset for new query
 
-	// Make a vector of all args matcheds inside functionNames
-	Obj::getInstance()->function.args = App::stringToVector(apply(functionNames, "\\$([a-zA-Z_][a-zA-Z0-9_]*)"));
+	// Match rawName inside function names.
+	Obj::getInstance()->function.rawName = apply(functionNames, "(\\b" + name + "\\b\\s?\\(.*?\\))");
+
+	// Match args inside rawName.
+	Obj::getInstance()->function.args = App::stringToVector(
+		apply(Obj::getInstance()->function.rawName,
+		"\\$([a-zA-Z_][a-zA-Z0-9_]*)")
+	);
 }
 
 

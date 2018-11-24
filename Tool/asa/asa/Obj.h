@@ -24,7 +24,8 @@ public:
 	// *OBJECT
 	struct function
 	{
-		std::string body; // Function name body.
+		std::string rawName; // Function name with args.
+		std::string body; // Function body.
 		std::vector<std::string> args; // Function args.
 
 	} function;

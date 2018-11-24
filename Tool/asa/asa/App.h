@@ -9,6 +9,7 @@
 #include <vector>
 #include <sstream>
 #include <regex>
+#include "Obj.h"
 
 using namespace std;
 class App
@@ -22,7 +23,8 @@ public:
 	static vector<std::string> stringToVector(std::string);
 	static bool ifExistsInText(std::string, std::string);
 private:
-
+	static void verboseList(vector<std::string>);
+	static void verboseList(std::string, vector<std::string>);
 };
 
 App::App()
@@ -44,14 +46,23 @@ void App::info(int argc, char *argv[]) {
 	for (int i = 0; argc > i; i++) {
 		cout << "  Arg[" << i << "]: " << argv[i] << endl;
 	}
+
+	highlightText("	FUNCTION\n", 11);
+	cout << "	\{" << endl;
+
+	cout << "		Raw Name   : " << Obj::getInstance()->function.rawName << endl;
+	cout << "		Args Number: " << Obj::getInstance()->function.args.size() << endl;
+	verboseList("		", Obj::getInstance()->function.args);
+
+	cout << "	\}" << endl << endl;
 	cout << "\}" << endl << endl;
 #else
 	cout << MSG_INFO << endl;
 #endif // !DEBUG
 }
 
-// HighLight a cout text
-void App:: highlightText(std::string text, const int color)
+// HighLight a cout text.
+void App::highlightText(std::string text, const int color)
 {
 	// Get console colors
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -65,6 +76,7 @@ void App:: highlightText(std::string text, const int color)
 
 }
 
+// Cast a string to vector of strings.
 vector<std::string> App::stringToVector(std::string string) {
 	std::stringstream ss(string.c_str());
 	std::string s;
@@ -82,11 +94,9 @@ vector<std::string> App::stringToVector(std::string string) {
 // Check if word exists inside text using native regex.
 bool App::ifExistsInText(std::string find, std::string text) {
 	int matchCount = 0;
-	std::stringstream ss;
-	ss << "(\\b" << find << "\\b)";
 
 	try {
-		std::regex r(ss.str());
+		std::regex r("(\\b" + find + "\\b)");
 
 		// This holds the first match
 		std::sregex_iterator currentMatch(text.begin(), text.end(), r);
@@ -103,7 +113,7 @@ bool App::ifExistsInText(std::string find, std::string text) {
 	}
 	catch (std::regex_error& e) {
 		// Syntax error in the regular expression
-		std::cout << ERR_REGEX << ss.str() << endl;
+		std::cout << ERR_REGEX << "(\\b" + find + "\\b)" << endl;
 		std::cout << e.what() << endl;
 		exit;
 	}
@@ -113,6 +123,20 @@ bool App::ifExistsInText(std::string find, std::string text) {
 	}
 	else {
 		return false;
+	}
+}
+
+// Cout list values.
+void App::verboseList(vector<std::string> list) {
+	for (int i = 0; list.size() > i; i++) {
+		cout << "Arg[" << i << "]: " << list.at(i) << endl;
+	}
+}
+// Cout list values with tabulation.
+void App::verboseList(std::string tabulation, vector<std::string> list) {
+
+	for (int i = 0; list.size() > i; i++) {
+		cout << tabulation + "Arg[" << i << "]: " << list.at(i) << endl;
 	}
 }
 
