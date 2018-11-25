@@ -8,8 +8,6 @@
 #include <string>
 #include <algorithm>
 #include <direct.h>
-#include <errno.h>  
-
 
 #include "RegularEx.h"
 
@@ -32,20 +30,7 @@ MetaWord::~MetaWord(){}
 void MetaWord::cd(std::string line) {
 	std::string path = matchCDPatch(line);
 
-	if (_chdir(path.c_str())) {
-		switch (errno)
-		{
-		case ENOENT:
-			printf("Unable to locate the directory: %s\n", path);
-			break;
-		case EINVAL:
-			printf("Invalid buffer.\n");
-			break;
-		default:
-			printf("Unknown error.\n");
-		}
-	}// Go to dir
-	system("dir");
+	_chdir(path.c_str()); // Go to dir
 
 	App::highlightText("New dirPath: ", 11);
 	App::highlightText(path + "\n", 14);
