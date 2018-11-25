@@ -4,10 +4,11 @@
 	Created by WesFerreira 22/11/2018
 */
 
-#include "RegularEx.h"
-#include "Obj.h"
 #include <iostream>
 #include <vector>
+
+#include "RegularEx.h"
+#include "Obj.h"
 
 // RegEx rules
 class Rules
@@ -30,8 +31,13 @@ public:
 	private:
 	} file;
 
+	Rules();
+	~Rules();
 private:
 };
+
+Rules::Rules(){}
+Rules::~Rules(){}
 
 ///////////////////////////////////////////////// FUNCTION /////////////////////////////////////////////////
 
@@ -43,7 +49,9 @@ void Rules::function::body(std::string functName, std::string mainText) {
 	std::string fullFunctionStruct = apply(mainText, "(\\b" + functName + "\\b)\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})");
 
 	// Match function body inside function structure mateched
-	Obj::getInstance()->function.body = apply(fullFunctionStruct, "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
+	std::string rawBody = apply(fullFunctionStruct, "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})");
+
+	Obj::getInstance()->function.body = App::removeEmptyLines(App::stringToVector(rawBody));
 }
 // Sets the function rawName and args if it has.
 void Rules::function::checkForArgs(std::string name, std::string functionNames) {

@@ -14,7 +14,9 @@ public:
 	std::string read();
 	int editLine(std::vector <int>, std::vector <std::string>);
 	void verbose();
+
 	FileManager(std::string);
+	~FileManager();
 
 private:
 	std::string fileName;
@@ -25,6 +27,7 @@ private:
 FileManager::FileManager(std::string fileName) {
 	FileManager::fileName = fileName;
 }
+FileManager::~FileManager(){}
 
 std::string FileManager::read() {
 	std::string line;

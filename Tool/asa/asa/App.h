@@ -6,9 +6,11 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <algorithm>
 #include <vector>
 #include <sstream>
 #include <regex>
+
 #include "Obj.h"
 
 using namespace std;
@@ -22,17 +24,15 @@ public:
 	static void highlightText(std::string, const int);
 	static vector<std::string> stringToVector(std::string);
 	static bool ifExistsInText(std::string, std::string);
+	static std::string removeEmptyLines(std::string);
+	static vector<std::string> removeEmptyLines(vector<std::string>);
 private:
 	static void verboseList(vector<std::string>);
 	static void verboseList(std::string, vector<std::string>);
 };
 
-App::App()
-{
-}
-App::~App()
-{
-}
+App::App(){}
+App::~App(){}
 
 void App::info(int argc, char *argv[]) {
 	system("title AUTOMA"); // CMD Title
@@ -43,14 +43,14 @@ void App::info(int argc, char *argv[]) {
 	cout << "  Args Number: " << argc << endl;
 
 	// Show all args
-	for (int i = 0; argc > i; i++) {
+	for (int i = 0; i < argc; i++) {
 		cout << "  Arg[" << i << "]: " << argv[i] << endl;
 	}
 
 	highlightText("	FUNCTION\n", 11);
 	cout << "	\{" << endl;
 
-	cout << "		Raw Name   : " << Obj::getInstance()->function.rawName << endl;
+	cout << "		Raw Name   : " << Obj::getInstance()->function.rawName;
 	cout << "		Args Number: " << Obj::getInstance()->function.args.size() << endl;
 	verboseList("		", Obj::getInstance()->function.args);
 
@@ -138,6 +138,25 @@ void App::verboseList(std::string tabulation, vector<std::string> list) {
 	for (int i = 0; list.size() > i; i++) {
 		cout << tabulation + "Arg[" << i << "]: " << list.at(i) << endl;
 	}
+}
+
+std::string App::removeEmptyLines(std::string string) {
+	string.erase(std::remove(string.begin(), string.end(), '\n'), string.end()); // Remove the \n from string.
+	string.erase(std::remove(string.begin(), string.end(), '\t'), string.end()); // Remove the \t from string.
+	return string;
+}
+vector<std::string> App::removeEmptyLines(vector<std::string> stringList) {
+	if (stringList.size() > 0) {
+		for (int i = 0; i < stringList.size(); i++) {
+			stringList.at(i) = removeEmptyLines(stringList.at(i));
+			if (stringList.at(i).empty()) {
+				stringList.erase(stringList.begin() + i);
+				i--; // Return index if erase an item, because vectors rearrange itself.
+			}
+		}
+	}
+	stringList.shrink_to_fit(); // Dealocate memory after erases.
+	return stringList;
 }
 
 #endif // !APP_H_INCLUDED

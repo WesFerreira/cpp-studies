@@ -25,7 +25,7 @@ public:
 	struct function
 	{
 		std::string rawName; // Function name with args.
-		std::string body; // Function body.
+		std::vector<std::string> body; // Function body.
 		std::vector<std::string> args; // Function args.
 
 	} function;

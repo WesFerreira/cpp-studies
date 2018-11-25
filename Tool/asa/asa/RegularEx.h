@@ -14,6 +14,7 @@ public:
 private:
 protected:
 	RegularEx();
+	~RegularEx();
 
 	std::string apply(std::string text, std::string regex);
 	std::string apply(std::string text, std::stringstream regex);
@@ -21,9 +22,8 @@ protected:
 	int matchCount = 0;
 };
 
-RegularEx::RegularEx()
-{
-}
+RegularEx::RegularEx(){}
+RegularEx::~RegularEx(){}
 
 // Apply RegEx to text and returns match as string
 std::string RegularEx::apply(std::string text, std::string regex) {

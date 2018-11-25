@@ -5,8 +5,10 @@
 */
 
 #include <iostream>
+#include <vector>
 #include <sstream>
 #include <cstdlib>
+
 #include "Rules.h"
 #include "MetaWord.h"
 
@@ -16,38 +18,40 @@ class Exec
 public:
 	Exec();
 	~Exec();
-	void commandLines(std::string);
+	void commandLines();
 private:
 	Rules *rule = new Rules();
-	MetaWord *word = new MetaWord();
+	MetaWord *metaWord = new MetaWord();
+
+	void enableMetaWords(std::string);
 };
 
-Exec::Exec()
-{
+Exec::Exec(){}
+Exec::~Exec(){}
+
+void Exec::commandLines() {
+	if (Obj::getInstance()->function.body.empty()) {
+		App::highlightText("Nothing to execute.\n", 11);
+	}
+	else
+	{
+		for (int i = 0; i < Obj::getInstance()->function.body.size(); i++) {
+			enableMetaWords(Obj::getInstance()->function.body.at(i)); // Enable meta words.
+		}
+	}
 }
 
-Exec::~Exec()
-{
-}
+// Add here all MetaWords, custom or not.
+void Exec::enableMetaWords(std::string line) {
+	const char *cLineChar = line.c_str();
 
-void Exec::commandLines(std::string commandLines) {
-	std::istringstream sStream(commandLines);
-	std::string line;
-	while (std::getline(sStream, line)) {
-		if (!line.empty()) {
-			const char *cLineChar = line.c_str();
-			if (App::ifExistsInText("cd", line)) {
-				word->metaCD(word->matchCDPatch(line));
-			}
-			else
-			{
-				system(cLineChar);
-			}
-		}
-		else
-		{
-
-		}
+	if (App::ifExistsInText("cd", line)) // Enable CD to work.
+	{
+		metaWord->cd(line);
+	}
+	else
+	{
+		system(cLineChar);
 	}
 }
 
