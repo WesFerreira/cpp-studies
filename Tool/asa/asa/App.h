@@ -37,7 +37,7 @@ App::~App(){}
 void App::info(int argc, char *argv[]) {
 	system("title AUTOMA"); // CMD Title
 
-#ifdef DEBUG
+#ifdef INFO
 	cout << MSG_DEBUG << endl;
 	cout << "\{" << endl;
 	cout << "  Args Number: " << argc << endl;
