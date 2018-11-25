@@ -12,12 +12,13 @@ class RegularEx
 {
 public:
 private:
+	std::string EscapeForRegularExpression(const std::string &s);
 protected:
 	RegularEx();
 	~RegularEx();
 
-	std::string apply(std::string text, std::string regex);
-	std::string apply(std::string text, std::stringstream regex);
+	std::string apply(std::string, std::string);
+	std::string applyReplace(std::string, std::string, std::string);
 
 	int matchCount = 0;
 };
@@ -56,5 +57,33 @@ std::string RegularEx::apply(std::string text, std::string regex) {
 	return ss.str();
 }
 
+
+//
+std::string RegularEx::applyReplace(std::string text, std::string regex, std::string replaceText) {
+	try
+	{
+		replaceText = EscapeForRegularExpression(replaceText);
+		text = boost::regex_replace(text, boost::regex(regex), replaceText);
+	}
+	catch (boost::regex_error& e) {
+		// Syntax error in the regular expression
+		std::cout << ERR_REGEX << regex << endl;
+		std::cout << e.what() << endl;
+		exit;
+	}
+	return text;
+}
+
+std::string RegularEx::EscapeForRegularExpression(const std::string &s) {
+	static const char metacharacters[] = R"(\.^$-+()[]{}|?*)";
+	std::string out;
+	out.reserve(s.size());
+	for (auto ch : s) {
+		if (std::strchr(metacharacters, ch))
+			out.push_back('\\');
+		out.push_back(ch);
+	}
+	return out;
+}
 
 #endif // !REGULAREX_H_INCLUDED

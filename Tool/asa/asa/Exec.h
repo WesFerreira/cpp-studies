@@ -26,9 +26,11 @@ private:
 	Rules *rule = new Rules();
 	MetaWord *metaWord = new MetaWord();
 
+	void enableMetaWords(std::string, int, char **);
 	void enableMetaWords(std::string);
 	void executeCommandLines();
-	void executeCommandLines(char **args);
+	void validateMeta(std::string);
+	void executeCommandLines(int, char **args);
 
 };
 
@@ -42,7 +44,7 @@ void Exec::validateCall() {
 	if (Obj::getInstance()->function.args.size() > 0) {
 		if (g_argc == Obj::getInstance()->function.args.size() + 2) { // If number of args match;
 			// TODO: Execute function with args
-			executeCommandLines(g_argv);
+			executeCommandLines(g_argc, g_argv);
 		}
 		// If number of args is less.
 		else if (g_argc < Obj::getInstance()->function.args.size() + 2)
@@ -60,14 +62,15 @@ void Exec::validateCall() {
 	}
 }
 
-void Exec::executeCommandLines(char **args) {
+void Exec::executeCommandLines(int argc, char **args) {
 	if (Obj::getInstance()->function.body.empty()) {
 		App::highlightText("Nothing to execute.\n", 11);
 	}
 	else
 	{
 		for (int i = 0; i < Obj::getInstance()->function.body.size(); i++) {
-			enableMetaWords(Obj::getInstance()->function.body.at(i)); // Enable meta words.
+
+			enableMetaWords(Obj::getInstance()->function.body.at(i), argc, args); // Enable meta words.
 		}
 	}
 }
@@ -85,18 +88,28 @@ void Exec::executeCommandLines() {
 }
 
 // Add here all MetaWords, custom or not.
-void Exec::enableMetaWords(std::string line) {
-	const char *cLineChar = line.c_str();
+void Exec::enableMetaWords(std::string line, int argc, char **args) {
 
+	for (int i = 0; i < Obj::getInstance()->function.args.size(); i++) {
+		line = metaWord->arg(line, Obj::getInstance()->function.args.at(i), args[i + 2]);
+
+		validateMeta(line);
+	}
+}
+// Add here all MetaWords, custom or not.
+void Exec::enableMetaWords(std::string line) {
+		validateMeta(line);
+}
+
+//
+void Exec::validateMeta(std::string line) {
 	if (App::ifExistsInText("cd", line)) // Enable CD to work.
 	{
 		metaWord->cd(line);
 	}
 	else
 	{
-		system(cLineChar);
+		system(line.c_str());
 	}
 }
-
-
 #endif // !EXEC_H_INCLUDED
