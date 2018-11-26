@@ -31,15 +31,13 @@ public:
 	private:
 	} file;
 
-	Rules();
-	~Rules();
+	Rules(); ~Rules();
 private:
 };
 
-Rules::Rules(){}
-Rules::~Rules(){}
+Rules::Rules(){} Rules::~Rules(){}
 
-///////////////////////////////////////////////// FUNCTION /////////////////////////////////////////////////
+///////////////////////////////////////////////// FUNCTION /////////////////////////////////////////////
 
 // Sets the function body.
 void Rules::function::body(std::string functName, std::string mainText) {
@@ -68,17 +66,11 @@ void Rules::function::checkForArgs(std::string name, std::string functionNames) 
 }
 
 
-
 ///////////////////////////////////////////////// FILE /////////////////////////////////////////////////
 
 // Sets all function names. (with or without args)
 void Rules::file::functionNames(std::string mainText) {
 	Obj::getInstance()->file.functionNames = apply(mainText, "(\\w+\\s?\\(.*?\\))");
 }
-
-
-
-///////////////////////////////////////////////// GENERAL /////////////////////////////////////////////////
-
 
 #endif // !RULES_H_INCLUDED

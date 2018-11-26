@@ -17,8 +17,7 @@ using namespace std;
 class App
 {
 public:
-	App();
-	~App();
+	App(); ~App();
 
 	static void info(int, char *[]);
 	static void highlightText(std::string, const int);
@@ -26,14 +25,15 @@ public:
 	static bool ifExistsInText(std::string, std::string);
 	static std::string removeEmptyLines(std::string);
 	static vector<std::string> removeEmptyLines(vector<std::string>);
+
 private:
 	static void verboseList(vector<std::string>);
 	static void verboseList(std::string, vector<std::string>);
 };
 
-App::App(){}
-App::~App(){}
+App::App(){} App::~App(){}
 
+// Shows some info when necessary.
 void App::info(int argc, char *argv[]) {
 	system("title AUTOMA"); // CMD Title
 
@@ -58,7 +58,7 @@ void App::info(int argc, char *argv[]) {
 	cout << "\}" << endl << endl;
 #else
 	cout << MSG_INFO << endl;
-#endif // !DEBUG
+#endif // !INFO
 }
 
 // HighLight a cout text.
@@ -134,17 +134,19 @@ void App::verboseList(vector<std::string> list) {
 }
 // Cout list values with tabulation.
 void App::verboseList(std::string tabulation, vector<std::string> list) {
-
 	for (int i = 0; list.size() > i; i++) {
 		cout << tabulation + "Arg[" << i << "]: " << list.at(i) << endl;
 	}
 }
 
+// Remove all empty lines (\n, \t) from string.
 std::string App::removeEmptyLines(std::string string) {
 	string.erase(std::remove(string.begin(), string.end(), '\n'), string.end()); // Remove the \n from string.
 	string.erase(std::remove(string.begin(), string.end(), '\t'), string.end()); // Remove the \t from string.
 	return string;
 }
+
+// Remove all empty lines from string vector.
 vector<std::string> App::removeEmptyLines(vector<std::string> stringList) {
 	if (stringList.size() > 0) {
 		for (int i = 0; i < stringList.size(); i++) {

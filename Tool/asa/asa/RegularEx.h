@@ -12,10 +12,9 @@ class RegularEx
 {
 public:
 private:
-	std::string EscapeForRegularExpression(const std::string &s);
+	std::string formatPathForRegex(const std::string &s);
 protected:
-	RegularEx();
-	~RegularEx();
+	RegularEx(); ~RegularEx();
 
 	std::string apply(std::string, std::string);
 	std::string applyReplace(std::string, std::string, std::string);
@@ -23,8 +22,7 @@ protected:
 	int matchCount = 0;
 };
 
-RegularEx::RegularEx(){}
-RegularEx::~RegularEx(){}
+RegularEx::RegularEx(){} RegularEx::~RegularEx(){}
 
 // Apply RegEx to text and returns match as string
 std::string RegularEx::apply(std::string text, std::string regex) {
@@ -58,11 +56,11 @@ std::string RegularEx::apply(std::string text, std::string regex) {
 }
 
 
-//
+// Apply RegEx to text, replace match, and returns as string
 std::string RegularEx::applyReplace(std::string text, std::string regex, std::string replaceText) {
 	try
 	{
-		replaceText = EscapeForRegularExpression(replaceText);
+		replaceText = formatPathForRegex(replaceText);
 		text = boost::regex_replace(text, boost::regex(regex), replaceText);
 	}
 	catch (boost::regex_error& e) {
@@ -74,7 +72,8 @@ std::string RegularEx::applyReplace(std::string text, std::string regex, std::st
 	return text;
 }
 
-std::string RegularEx::EscapeForRegularExpression(const std::string &s) {
+// Escape Paths for regex
+std::string RegularEx::formatPathForRegex(const std::string &s) {
 	static const char metacharacters[] = R"(\.^$-+()[]{}|?*)";
 	std::string out;
 	out.reserve(s.size());

@@ -15,17 +15,16 @@
 class MetaWord : RegularEx
 {
 public:
-	MetaWord();
-	~MetaWord();
+	MetaWord(); ~MetaWord();
+
 	void cd(std::string);
 	std::string arg(std::string, std::string, std::string);
 
 private:
 	std::string matchCDPatch(std::string);
-
 };
-MetaWord::MetaWord() {}
-MetaWord::~MetaWord(){}
+
+MetaWord::MetaWord() {} MetaWord::~MetaWord(){}
 
 // CD don't works directly on the system, so this do the cd's work.
 void MetaWord::cd(std::string line) {
@@ -42,10 +41,9 @@ std::string MetaWord::matchCDPatch(std::string line) {
 	return App::removeEmptyLines(apply(line, "(?<=\\bcd\\b\\s)(.*)(?!\\n)$"));
 }
 
-//
+// Replace arg name by arg value.
 std::string MetaWord::arg(std::string line, std::string argName, std::string argValue) {
-	std::string a= applyReplace(line, "\\$[a-zA-Z_][a-zA-Z0-9_]*", argValue);
-	return a;
+	return applyReplace(line, "\\$[a-zA-Z_][a-zA-Z0-9_]*", argValue);
 }
 
 #endif // !METAWORD_H_INCLUDED
