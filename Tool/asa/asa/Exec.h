@@ -12,9 +12,6 @@
 #include "Rules.h"
 #include "MetaWord.h"
 
-extern char **g_argv;
-extern int	  g_argc;
-
 using namespace std;
 class Exec
 {
@@ -26,11 +23,11 @@ private:
 	Rules *rule = new Rules();
 	MetaWord *metaWord = new MetaWord();
 
-	void enableMetaWords(std::string, int, char **);
+	void enableMetaWords(std::string, std::vector<std::string>);
 	void enableMetaWords(std::string);
 	void executeCommandLines();
 	void validateMeta(std::string);
-	void executeCommandLines(int, char **args);
+	void executeCommandLines(std::vector<std::string>);
 
 };
 
@@ -42,17 +39,17 @@ void Exec::validateCall() {
 
 	// TODO: Test if a variable with args.size is faster than get all time.
 	if (Obj::getInstance()->function.args.size() > 0) {
-		if (g_argc == Obj::getInstance()->function.args.size() + 2) { // If number of args match;
+		if (Obj::getInstance()->app.args.size() == Obj::getInstance()->function.args.size() + 2) { // If number of args match;
 			// TODO: Execute function with args
-			executeCommandLines(g_argc, g_argv);
+			executeCommandLines(Obj::getInstance()->app.args);
 		}
 		// If number of args is less.
-		else if (g_argc < Obj::getInstance()->function.args.size() + 2)
+		else if (Obj::getInstance()->app.args.size() < Obj::getInstance()->function.args.size() + 2)
 		{
 			cout << ERR_MISSING_ARG << endl;
 		}
 		// If number of args is greater.
-		else if (g_argc > Obj::getInstance()->function.args.size() + 2)
+		else if (Obj::getInstance()->app.args.size() > Obj::getInstance()->function.args.size() + 2)
 		{
 			cout << ERR_MANY_ARGS << endl;
 		}
@@ -62,7 +59,7 @@ void Exec::validateCall() {
 	}
 }
 
-void Exec::executeCommandLines(int argc, char **args) {
+void Exec::executeCommandLines(std::vector<std::string> args) {
 	if (Obj::getInstance()->function.body.empty()) {
 		App::highlightText("Nothing to execute.\n", 11);
 	}
@@ -70,7 +67,7 @@ void Exec::executeCommandLines(int argc, char **args) {
 	{
 		for (int i = 0; i < Obj::getInstance()->function.body.size(); i++) {
 
-			enableMetaWords(Obj::getInstance()->function.body.at(i), argc, args); // Enable meta words.
+			enableMetaWords(Obj::getInstance()->function.body.at(i), args); // Enable meta words.
 		}
 	}
 }
@@ -87,14 +84,21 @@ void Exec::executeCommandLines() {
 	}
 }
 
-// Add here all MetaWords, custom or not.
-void Exec::enableMetaWords(std::string line, int argc, char **args) {
+// Add here all MetaWords, when function has arguments.
+void Exec::enableMetaWords(std::string line, std::vector<std::string> args) {
+	std::string newLine;
+	if (Obj::getInstance()->app.args.size() > 2) {
+		newLine = metaWord->arg(line, Obj::getInstance()->function.args.at(0), Obj::getInstance()->app.args.at(2));
 
-	for (int i = 0; i < Obj::getInstance()->function.args.size(); i++) {
-		line = metaWord->arg(line, Obj::getInstance()->function.args.at(i), args[i + 2]);
+		if (newLine.compare(line) != 0) {
+			Obj::getInstance()->function.args.erase(Obj::getInstance()->function.args.begin());
+			Obj::getInstance()->function.args.shrink_to_fit();
 
-		validateMeta(line);
+			Obj::getInstance()->app.args.erase(Obj::getInstance()->app.args.begin() + 2);
+			Obj::getInstance()->app.args.shrink_to_fit();
+		}
 	}
+		validateMeta(newLine);
 }
 // Add here all MetaWords, custom or not.
 void Exec::enableMetaWords(std::string line) {

@@ -36,6 +36,12 @@ public:
 		std::string mainText;
 		std::string functionNames; // Function names. (with or without args)
 	} file;
+
+	// *OBJECT
+	struct app
+	{
+		std::vector<std::string> args;
+	} app;
 };
 
 /* Null, because instance will be initialized on demand. */
