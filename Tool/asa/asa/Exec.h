@@ -86,9 +86,9 @@ void Exec::executeCommandLines() {
 
 // Add here all MetaWords, when function has arguments.
 void Exec::enableMetaWords(std::string line, std::vector<std::string> args) {
-	std::string newLine;
+	
 	if (Obj::getInstance()->app.args.size() > 2) {
-		newLine = metaWord->arg(line, Obj::getInstance()->function.args.at(0), Obj::getInstance()->app.args.at(2));
+		std::string newLine = metaWord->arg(line, Obj::getInstance()->function.args.at(0), Obj::getInstance()->app.args.at(2));
 
 		if (newLine.compare(line) != 0) {
 			Obj::getInstance()->function.args.erase(Obj::getInstance()->function.args.begin());
@@ -97,8 +97,12 @@ void Exec::enableMetaWords(std::string line, std::vector<std::string> args) {
 			Obj::getInstance()->app.args.erase(Obj::getInstance()->app.args.begin() + 2);
 			Obj::getInstance()->app.args.shrink_to_fit();
 		}
-	}
 		validateMeta(newLine);
+	}
+	else
+	{
+		validateMeta(line);
+	}
 }
 // Add here all MetaWords, custom or not.
 void Exec::enableMetaWords(std::string line) {
