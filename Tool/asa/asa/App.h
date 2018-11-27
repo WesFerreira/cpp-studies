@@ -22,6 +22,7 @@ public:
 	static void info(int, char *[]);
 	static void highlightText(std::string, const int);
 	static vector<std::string> stringToVector(std::string);
+	static std::string vectorToString(vector<std::string>);
 	static bool ifExistsInText(std::string, std::string);
 	static std::string removeEmptyLines(std::string);
 	static vector<std::string> removeEmptyLines(vector<std::string>);
@@ -89,6 +90,16 @@ vector<std::string> App::stringToVector(std::string string) {
 		}
 	}
 	return list;
+}
+
+// Cast a vector to string of strings.
+std::string App::vectorToString(vector<std::string> vector) {
+	std::string string;
+	
+	for (auto line : vector) {
+		string += line + "\n";
+	}
+	return string;
 }
 
 // Check if word exists inside text using native regex.

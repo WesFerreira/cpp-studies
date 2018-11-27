@@ -18,7 +18,7 @@ public:
 	MetaWord(); ~MetaWord();
 
 	void cd(std::string);
-	std::string arg(std::string, std::string, std::string);
+	void inputArgValues();
 
 private:
 	std::string matchCDPatch(std::string);
@@ -41,9 +41,17 @@ std::string MetaWord::matchCDPatch(std::string line) {
 	return App::removeEmptyLines(apply(line, "(?<=\\bcd\\b\\s)(.*)(?!\\n)$"));
 }
 
-// Replace arg name by arg value.
-std::string MetaWord::arg(std::string line, std::string argName, std::string argValue) {
-	return applyReplace(line, "\\$[a-zA-Z_][a-zA-Z0-9_]*", argValue);
+// Replace arg name by arg value in all body.
+void MetaWord::inputArgValues() {
+	std::string body = App::vectorToString(Obj::getInstance()->function.body);
+
+	for (int i = 0; i < Obj::getInstance()->function.args.size(); i++) { // Foreach function args
+		// Replace the argName for argValue in all body, in case of argName reuses.
+		body = applyReplace(body, "\\" + Obj::getInstance()->function.args.at(i), Obj::getInstance()->app.args.at(i + 2));
+	}
+	Obj::getInstance()->function.body = App::stringToVector(body);
+
+	std::vector<std::string> aa = Obj::getInstance()->function.body;
 }
 
 #endif // !METAWORD_H_INCLUDED
