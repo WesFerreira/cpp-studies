@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <vector>
+#include <boost/algorithm/string/split.hpp>
 
 #include "RegularEx.h"
 #include "Obj.h"
@@ -20,13 +21,14 @@ public:
 		void body(std::string, std::string);
 		void checkForArgs(std::string, std::string);
 	private:
+
 	} function;
 
 	// Nested Class
 	class file : RegularEx {
-	friend class Rules;
 	public:
-		void functionNames(std::string);
+		void sequesterFunctionNames();
+		void sequesterFunctions();
 
 	private:
 	} file;
@@ -69,8 +71,30 @@ void Rules::function::checkForArgs(std::string name, std::string functionNames) 
 ///////////////////////////////////////////////// FILE /////////////////////////////////////////////////
 
 // Sets all function names. (with or without args)
-void Rules::file::functionNames(std::string mainText) {
-	Obj::getInstance()->file.functionNames = apply(mainText, "(\\w+\\s?\\(.*?\\))");
+void Rules::file::sequesterFunctionNames() {
+	Obj::getInstance()->file.functionNames = App::stringToVector(
+		apply(Obj::getInstance()->file.mainScope, "(\\w+\\s?\\(.*?\\))")
+	);
 }
 
+void Rules::file::sequesterFunctions() {
+	for (auto name : Obj::getInstance()->file.functionNames) {
+		// Isolate only the name.
+		name = App::stringToVector(apply(name, "\\S[^(]*")).at(0); 
+		
+		std::string matchFullFunction = "(\\b" + name + "\\b)\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})";
+
+		// Store function in vector.
+		Obj::getInstance()->file.functions.push_back(apply(Obj::getInstance()->file.mainScope, 
+			matchFullFunction));
+
+		// Erase function of mainScope.
+		Obj::getInstance()->file.mainScope = App::vectorToString(
+			App::removeEmptyLines(
+				App::stringToVector(
+					applyReplace(
+						Obj::getInstance()->file.mainScope, matchFullFunction, ""))));
+		// TODO: Find a better way to remove empty lines from a string (above).
+	}
+}
 #endif // !RULES_H_INCLUDED

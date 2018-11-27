@@ -36,7 +36,7 @@ App::App(){} App::~App(){}
 
 // Shows some info when necessary.
 void App::info(int argc, char *argv[]) {
-	system("title AUTOMA"); // CMD Title
+	system("title Aura"); // CMD Title
 
 #ifdef INFO
 	cout << MSG_DEBUG << endl;
