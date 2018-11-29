@@ -16,7 +16,7 @@ class Rules
 {
 public:
 	// Nested Class
-	class function : RegularEx {
+	class function : private RegularEx {
 	public:
 		void body();
 		void checkForArgs();
@@ -25,7 +25,7 @@ public:
 	} function;
 
 	// Nested Class
-	class file : RegularEx {
+	class file : private RegularEx {
 	public:
 		void sequesterFunctionNames();
 		void sequesterFunctions();

@@ -48,6 +48,12 @@
     <ClInclude Include="GlobalScope.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StructureBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
