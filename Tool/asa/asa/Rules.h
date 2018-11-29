@@ -30,7 +30,6 @@ public:
 		void sequesterFunctionNames();
 		void sequesterFunctions();
 		void sequesterGlobalVars();
-		void inputGlobalVarValues();
 
 	private:
 		void sequesterFromGlobalScope(std::string);
@@ -111,30 +110,6 @@ void Rules::file::sequesterGlobalVars() {
 	sequesterFromGlobalScope(matchVars);
 
 	std::vector<std::string> v = Obj::getInstance()->file.globalVars;
-}
-
-void Rules::file::inputGlobalVarValues() {
-	std::string functions = App::vectorToString(Obj::getInstance()->file.functions);
-
-	
-
-	
-	for (int i = 0; i < Obj::getInstance()->file.globalVars.size();i++) {
-		//for (auto arg : Obj::getInstance()->function.args) {
-		//	if (arg.compare(Obj::getInstance()->file.globalVars.at(i)) == 0) { // If has a globalVarName equals function argName
-		//		i++;
-		//		goto outerLoop;
-		//	}
-		//}
-
-		for (auto function : Obj::getInstance()->file.functions) {
-
-		}
-		std::string globalVar = Obj::getInstance()->file.globalVars.at(i);
-		globalVar.erase(0 ,1);
-		functions = applyReplace(functions, "\\$\\b" + globalVar +"\\b(?![^\\(]*\\))", "GLOBAL");
-	}
-	cout << functions << endl;
 }
 
 void Rules::file::sequesterFromGlobalScope(std::string regex) {
