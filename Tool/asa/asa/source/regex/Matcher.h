@@ -33,6 +33,7 @@ private:
 	std::string regexToMatchFunctionSignature;
 	std::string regexToMatchFunctionBody;
 	std::string regexToMatchFunctionArgs;
+
 };
 Matcher::Matcher(){} Matcher::~Matcher(){}
 

@@ -42,16 +42,25 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Function.h">
+    <ClInclude Include="source\interfaces\InterfaceVar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalScope.h">
+    <ClInclude Include="source\StructureBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StructureBuilder.h">
+    <ClInclude Include="source\regex\Matcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Matcher.h">
+    <ClInclude Include="source\structureFiles\Arg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\structureFiles\Function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\structureFiles\GlobalScope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\structureFiles\Var.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

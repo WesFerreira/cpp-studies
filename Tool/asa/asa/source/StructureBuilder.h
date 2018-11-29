@@ -7,9 +7,9 @@
 #include <iostream>
 #include <vector>
 
-#include "GlobalScope.h"
-#include "Function.h"
-#include "Matcher.h"
+#include "regex\Matcher"
+#include "structureFiles\GlobalScope.h"
+#include "structureFiles\Function.h"
 
 class StructureBuilder : private Matcher
 {
@@ -17,8 +17,10 @@ public:
 	StructureBuilder();
 	~StructureBuilder();
 
-private:
+	void build();
 
+private:
+	void buildGlobalScope();
 };
 
 StructureBuilder::StructureBuilder()

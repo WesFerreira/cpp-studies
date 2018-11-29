@@ -160,18 +160,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="source\structureFiles\Arg.h" />
     <ClInclude Include="Exec.h" />
     <ClInclude Include="FileManager.h" />
-    <ClInclude Include="Function.h" />
-    <ClInclude Include="GlobalScope.h" />
-    <ClInclude Include="Matcher.h" />
+    <ClInclude Include="source\structureFiles\Function.h" />
+    <ClInclude Include="source\structureFiles\GlobalScope.h" />
+    <ClInclude Include="source\interfaces\InterfaceVar.h" />
+    <ClInclude Include="source\regex\Matcher.h" />
     <ClInclude Include="MetaWord.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RegularEx.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rules.h" />
-    <ClInclude Include="StructureBuilder.h" />
+    <ClInclude Include="source\StructureBuilder.h" />
+    <ClInclude Include="source\structureFiles\Var.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a.cpp" />
