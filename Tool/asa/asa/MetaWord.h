@@ -66,8 +66,6 @@ void MetaWord::inputArgValues() {
 		body = applyReplace(body, "\\" + Obj::getInstance()->function.args.at(i), Obj::getInstance()->app.args.at(i + 2));
 	}
 	Obj::getInstance()->function.body = App::stringToVector(body);
-
-	std::vector<std::string> aa = Obj::getInstance()->function.body;
 }
 
 #endif // !METAWORD_H_INCLUDED

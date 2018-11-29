@@ -33,9 +33,10 @@ public:
 	// *OBJECT
 	struct file
 	{
-		std::string mainScope;
+		std::string globalScope;
 		std::vector<std::string> functionNames; // Function names. (with or without args)
 		std::vector<std::string> functions; // Function structures. (with or without args)
+		std::vector<std::string> globalVars;
 	} file;
 
 	// *OBJECT
