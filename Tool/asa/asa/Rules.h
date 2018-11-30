@@ -8,7 +8,7 @@
 #include <vector>
 #include <boost/algorithm/string/split.hpp>
 
-#include "RegularEx.h"
+#include "source/regex/RegularEx.h"
 #include "Obj.h"
 
 // RegEx rules

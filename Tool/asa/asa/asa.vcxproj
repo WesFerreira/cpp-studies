@@ -160,9 +160,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="source\file\FileHolder.h" />
+    <ClInclude Include="source\Igniter.h" />
     <ClInclude Include="source\structureFiles\Arg.h" />
     <ClInclude Include="Exec.h" />
-    <ClInclude Include="FileManager.h" />
+    <ClInclude Include="source\file\FileManager.h" />
     <ClInclude Include="source\structureFiles\Function.h" />
     <ClInclude Include="source\structureFiles\GlobalScope.h" />
     <ClInclude Include="source\interfaces\InterfaceVar.h" />
@@ -170,7 +172,7 @@
     <ClInclude Include="MetaWord.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="RegularEx.h" />
+    <ClInclude Include="source\regex\RegularEx.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="source\StructureBuilder.h" />

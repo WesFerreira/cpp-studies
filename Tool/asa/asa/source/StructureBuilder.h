@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-#include "regex\Matcher"
+#include "regex/Matcher.h"
 #include "structureFiles\GlobalScope.h"
 #include "structureFiles\Function.h"
 
@@ -29,5 +29,9 @@ StructureBuilder::StructureBuilder()
 
 StructureBuilder::~StructureBuilder()
 {
+}
+
+void StructureBuilder::build() {
+	test();
 }
 #endif

@@ -21,12 +21,6 @@
     <ClInclude Include="App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RegularEx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Exec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -61,6 +55,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\structureFiles\Var.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\file\FileHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\regex\RegularEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\file\FileManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Igniter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

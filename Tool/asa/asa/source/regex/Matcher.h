@@ -6,12 +6,15 @@
 
 #include <iostream>
 #include <vector>
-#include"RegularEx.h"
 
-class Matcher : private RegularEx
+#include "RegularEx.h"
+#include "..\file\FileHolder.h"
+
+class Matcher : private RegularEx, private FileHolder
 {
 public:
 	~Matcher();
+
 protected:
 	std::string matchFunctions(std::string textToApplyRegex);
 	std::string matchFunctionNameList(std::string textToApplyRegex);
@@ -25,6 +28,7 @@ protected:
 	Matcher();
 private:
 
+
 	std::string regexToMatchFunctions;
 	std::string regexToMatchFunctionNameList;
 	std::string regexToMatchVars;
@@ -36,7 +40,5 @@ private:
 
 };
 Matcher::Matcher(){} Matcher::~Matcher(){}
-
-
 
 #endif

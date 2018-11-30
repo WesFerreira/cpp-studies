@@ -10,7 +10,7 @@
 #include <direct.h>
 #include <errno.h>  
 
-#include "RegularEx.h"
+#include "source/regex/RegularEx.h"
 
 // Words that need special treatments before execute.
 class MetaWord : RegularEx
