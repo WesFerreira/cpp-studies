@@ -69,6 +69,9 @@
     <ClInclude Include="source\Igniter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\templates\FileAccess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

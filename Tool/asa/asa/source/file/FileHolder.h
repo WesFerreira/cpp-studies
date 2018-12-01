@@ -8,18 +8,20 @@
 #include <string>
 
 #include "FileManager.h"
+#include "..\templates\FileAccess.h"
 
 class FileHolder : private FileManager
 {
 public:
-	friend class Igniter;
-
-protected:
-	static FileHolder* getInstance(); // Only inherited or friend can to have this class.
-	static std::string getFileContent(const FileHolder &fh);
+	friend class Igniter;	
 
 private:
-	std::string fileContent = "Welis";
+	friend class FileAccess<FileHolder>; // Giving trust to acces the file.
+
+	static FileHolder* getInstance(); // Prevent instanciation.
+	static std::string getFileContent(const FileHolder &);
+
+	std::string fileContent;
 
 	static FileHolder* instance;
 	void hold();
@@ -35,8 +37,8 @@ FileHolder* FileHolder::getInstance()
 	return instance;
 }
 
-std::string FileHolder::getFileContent(const FileHolder &fh) {
-	return fh.fileContent;
+std::string FileHolder::getFileContent(const FileHolder &fileHolder) {
+	return fileHolder.fileContent;
 }
 
 void FileHolder::hold() {

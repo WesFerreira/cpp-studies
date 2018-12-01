@@ -14,24 +14,16 @@
 class StructureBuilder : private Matcher
 {
 public:
-	StructureBuilder();
-	~StructureBuilder();
+	StructureBuilder(); ~StructureBuilder();
 
 	void build();
 
 private:
 	void buildGlobalScope();
 };
-
-StructureBuilder::StructureBuilder()
-{
-}
-
-StructureBuilder::~StructureBuilder()
-{
-}
+StructureBuilder::StructureBuilder(){} StructureBuilder::~StructureBuilder(){}
 
 void StructureBuilder::build() {
-	test();
+	
 }
 #endif

@@ -177,6 +177,7 @@
     <ClInclude Include="Rules.h" />
     <ClInclude Include="source\StructureBuilder.h" />
     <ClInclude Include="source\structureFiles\Var.h" />
+    <ClInclude Include="source\templates\FileAccess.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a.cpp" />

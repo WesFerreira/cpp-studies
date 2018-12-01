@@ -9,12 +9,13 @@
 
 #include "RegularEx.h"
 #include "..\file\FileHolder.h"
+#include "..\templates\FileAccess.h"
 
-class Matcher : private RegularEx, private FileHolder
+class Matcher : private RegularEx
 {
 public:
 	~Matcher();
-
+	
 protected:
 	std::string matchFunctions(std::string textToApplyRegex);
 	std::string matchFunctionNameList(std::string textToApplyRegex);
@@ -25,9 +26,10 @@ protected:
 	std::string matchFunctionBody(std::string textToApplyRegex);
 	std::string matchFunctionArgs(std::string textToApplyRegex);
 
-	Matcher();
 private:
 
+	FileAccess<FileHolder> access; // Garant access to file content
+	std::string fileToHandle = access.accessFileContent(*access.accessHolderInstance());
 
 	std::string regexToMatchFunctions;
 	std::string regexToMatchFunctionNameList;
@@ -39,6 +41,6 @@ private:
 	std::string regexToMatchFunctionArgs;
 
 };
-Matcher::Matcher(){} Matcher::~Matcher(){}
+Matcher::~Matcher(){}
 
 #endif

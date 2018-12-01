@@ -11,18 +11,16 @@
 class RegularEx
 {
 public:
-private:
-	std::string formatPathForRegex(const std::string &s);
 protected:
-	RegularEx(); ~RegularEx();
-
 	std::string apply(std::string, std::string);
 	std::string applyReplace(std::string, std::string, std::string);
 
 	int matchCount = 0;
-};
 
-RegularEx::RegularEx(){} RegularEx::~RegularEx(){}
+private:
+	std::string formatPathForRegex(const std::string &s);
+
+};
 
 // Apply RegEx to text and returns match as string
 std::string RegularEx::apply(std::string text, std::string regex) {
