@@ -162,6 +162,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="source\file\FileHolder.h" />
     <ClInclude Include="source\Igniter.h" />
+    <ClInclude Include="source\interfaces\InterfaceSingletonAccess.h" />
     <ClInclude Include="source\structureFiles\Arg.h" />
     <ClInclude Include="Exec.h" />
     <ClInclude Include="source\file\FileManager.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="source\StructureBuilder.h" />
     <ClInclude Include="source\structureFiles\Var.h" />
     <ClInclude Include="source\templates\FileAccess.h" />
+    <ClInclude Include="source\templates\HoldAccess.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a.cpp" />

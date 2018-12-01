@@ -6,8 +6,11 @@
 
 #include <iostream>
 
+#include "..\interfaces\InterfaceSingletonAccess.h"
+
 // PassKey Iidiom (Pattern)
-template <typename T> class FileAccess
+template <typename T> 
+class FileAccess : private InterfaceSingletonAccess <T>
 {
 public:
 private:
@@ -20,9 +23,6 @@ private:
 		return T::getFileContent(fHolder);
 	}
 
-	T* accessHolderInstance() {
-		return T::getInstance();
-	}
 
 };
 #endif

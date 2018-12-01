@@ -53,7 +53,6 @@ std::string RegularEx::apply(std::string text, std::string regex) {
 	return ss.str();
 }
 
-
 // Apply RegEx to text, replace match, and returns as string
 std::string RegularEx::applyReplace(std::string text, std::string regex, std::string replaceText) {
 	try

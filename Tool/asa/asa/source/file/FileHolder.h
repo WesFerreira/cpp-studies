@@ -9,14 +9,19 @@
 
 #include "FileManager.h"
 #include "..\templates\FileAccess.h"
+#include "..\templates\HoldAccess.h"
 
 class FileHolder : private FileManager
 {
+	friend class InterfaceSingletonAccess<FileHolder>; // Giving trust to acces the Instance.
+	friend class FileAccess<FileHolder>; // Giving trust to acces the file.
+	friend class HoldAccess<FileHolder>; // Giving trust to acces the Instance.
+
 public:
-	friend class Igniter;	
+protected:
 
 private:
-	friend class FileAccess<FileHolder>; // Giving trust to acces the file.
+	
 
 	static FileHolder* getInstance(); // Prevent instanciation.
 	static std::string getFileContent(const FileHolder &);
@@ -24,7 +29,7 @@ private:
 	std::string fileContent;
 
 	static FileHolder* instance;
-	void hold();
+	static void hold();
 };
 FileHolder* FileHolder::instance = 0;
 FileHolder* FileHolder::getInstance()

@@ -8,6 +8,8 @@
 
 #include "file/FileHolder.h"
 #include "regex/Matcher.h"
+#include "templates/HoldAccess.h"
+
 
 class Igniter
 {
@@ -17,11 +19,11 @@ public:
 
 	void ignit();
 private:
-
+	HoldAccess<FileHolder> access;
 };
 Igniter::Igniter(){} Igniter::~Igniter(){}
 
 void Igniter::ignit() {
-	FileHolder::getInstance()->hold();
+	access.hold();
 }
 #endif

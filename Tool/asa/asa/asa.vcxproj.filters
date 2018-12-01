@@ -72,6 +72,12 @@
     <ClInclude Include="source\templates\FileAccess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\interfaces\InterfaceSingletonAccess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\templates\HoldAccess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
