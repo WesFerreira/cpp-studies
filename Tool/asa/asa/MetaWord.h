@@ -65,7 +65,7 @@ void MetaWord::inputArgValues() {
 		// Replace the argName for argValue in all body, in case of argName reuses.
 		body = applyReplace(body, "\\" + Obj::getInstance()->function.args.at(i), Obj::getInstance()->app.args.at(i + 2));
 	}
-	Obj::getInstance()->function.body = App::stringToVector(body);
+	Obj::getInstance()->function.body = App::stringToVector(body, '\n');
 }
 
 #endif // !METAWORD_H_INCLUDED

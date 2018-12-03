@@ -13,37 +13,55 @@
 
 class Matcher : private RegularEx
 {
-public:
-	~Matcher();
-	
+public:	
 protected:
 	std::string matchFunctions();
-	std::string matchFunctionNameList();
 	std::string matchVars();
+	std::string matchVars(std::string); // Reused to match all vars in all scopes.
 
-	std::string matchFunctionName();
-	std::string matchFunctionSignature();
-	std::string matchFunctionBody();
-	std::string matchFunctionArgs();
+	std::string matchFunctionSignature(std::string);
+	std::string matchFunctionName(std::string);
+	std::string matchFunctionBody(std::string);
 
 private:
 	FileAccess<FileHolder> access; // Garant access to file content
-	std::string fileToHandle = access.accessFileContent(*access.accessInstance());
+	std::string vars;
 
 	std::string regexToMatchFunctions = "\\*?\\w*\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})";
-	std::string regexToMatchFunctionNameList = "(\\w+\\s?\\(.*?\\))"; // Match function SIGNATURE list.
-	std::string regexToMatchVars = "\\$([a-zA-Z_][a-zA-Z0-9_]*)"; // Match vars inside or outside parentheses. Use it inside function signature to get args.
+	std::string regexToMatchVars = "\\$([a-zA-Z_][a-zA-Z0-9_]*)";
 
-	std::string regexToMatchFunctionName = "[a-zA-Z_][a-zA-Z0-9_]*(?![^(]*\\))"; // Match names inside signat. list.
-	std::string regexToMatchFunctionSignature = ""; // Was matched before just build.
+	std::string regexToMatchFunctionSignature = "(\\w+\\s?\\(.*?\\))";
+	std::string regexToMatchFunctionName = "[a-zA-Z_][a-zA-Z0-9_]*(?![^(]*\\))(?![^{]*\\})";
 	std::string regexToMatchFunctionBody = "(?<=\\{)((?:.*?\\r?\\n?)*)(?=\\})";
-	std::string regexToMatchFunctionArgs = ""; // See regexToMatchVars
 
 };
-Matcher::~Matcher(){}
 
 std::string Matcher::matchFunctions() {
+	std::string fileToHandle = access.fileContentAccess(*access.instanceAccess());
+	std::string functions = apply(fileToHandle, regexToMatchFunctions);
 
+	vars = eraseMatch(fileToHandle, regexToMatchFunctions);
+	return functions;
+}
+
+std::string Matcher::matchVars() {
+	return apply(vars, regexToMatchVars);
+}
+
+std::string Matcher::matchVars(std::string scope) {
+	return apply(scope, regexToMatchVars);
+}
+
+std::string Matcher::matchFunctionSignature(std::string function) {
+	return apply(function, regexToMatchFunctionSignature);
+}
+
+std::string Matcher::matchFunctionName(std::string function) {
+	return apply(function, regexToMatchFunctionName);
+}
+
+std::string Matcher::matchFunctionBody(std::string function) {
+	return apply(function, regexToMatchFunctionBody);
 }
 
 #endif

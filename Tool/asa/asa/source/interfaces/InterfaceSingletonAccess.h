@@ -11,7 +11,7 @@ class InterfaceSingletonAccess
 {
 public:
 protected:
-	T* accessInstance() {
+	T* instanceAccess() {
 		return T::getInstance();
 	}
 

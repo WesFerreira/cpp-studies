@@ -19,10 +19,8 @@ private:
 	// Only friends can to access these methods.
 	FileAccess() {}
 
-	std::string accessFileContent(const T &fHolder) {
-		return T::getFileContent(fHolder);
+	std::string fileContentAccess(T& fh) {
+		return T::getFileContent(fh);
 	}
-
-
 };
 #endif

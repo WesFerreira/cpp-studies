@@ -8,6 +8,7 @@
 #include <string>
 
 #include "FileManager.h"
+#include "..\interfaces\InterfaceSingletonAccess.h"
 #include "..\templates\FileAccess.h"
 #include "..\templates\HoldAccess.h"
 
@@ -19,12 +20,10 @@ class FileHolder : private FileManager
 
 public:
 protected:
-
 private:
-	
-
 	static FileHolder* getInstance(); // Prevent instanciation.
-	static std::string getFileContent(const FileHolder &);
+
+	static std::string getFileContent(FileHolder&);
 
 	std::string fileContent;
 
@@ -42,13 +41,13 @@ FileHolder* FileHolder::getInstance()
 	return instance;
 }
 
-std::string FileHolder::getFileContent(const FileHolder &fileHolder) {
-	return fileHolder.fileContent;
+std::string FileHolder::getFileContent(FileHolder &fh) {
+	return fh.fileContent;
 }
 
 void FileHolder::hold() {
 	getInstance()->fileContent = read("C:\\Users\\conta\\Desktop\\file2.txt");
-	std::cout << getInstance()->fileContent << std::endl;
+	std::cout << getFileContent(*getInstance()) << std::endl;
 }
 
 #endif

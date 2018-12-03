@@ -21,12 +21,10 @@ public:
 	std::vector<Var> getVars();
 	std::vector<Function> getFunctions();
 	std::string getFunctionNames();
-	std::string getUndefined();
 
 	void setVars(std::vector<Var>);
 	void setFunctions(std::vector<Function>);
 	void setFunctionNames(std::string);
-	void setUndefined(std::string);
 private:
 	/* Private constructor to prevent instancing. */
 	GlobalScope();
@@ -35,7 +33,6 @@ private:
 	std::vector<Var> vars;
 	std::vector<Function> functions;
 	std::string functionNames;
-	std::string undefined;
 };
 
 /* Null, because instance will be initialized on demand. */
@@ -60,12 +57,7 @@ std::vector<Function> GlobalScope::getFunctions(){
 std::string GlobalScope::getFunctionNames() {
 	return this->functionNames;
 }
-std::string GlobalScope::getUndefined() {
-
-	return this->undefined;
-}
-
-void GlobalScope::setVars(std::vector<Var>) {
+void GlobalScope::setVars(std::vector<Var> vars) {
 	this->vars = vars;
 }
 void GlobalScope::setFunctions(std::vector<Function> functions) {
@@ -73,8 +65,5 @@ void GlobalScope::setFunctions(std::vector<Function> functions) {
 }
 void GlobalScope::setFunctionNames(std::string functionNames) {
 	this->functionNames = functionNames;
-}
-void GlobalScope::setUndefined(std::string undefined) {
-	this->undefined = undefined;
 }
 #endif

@@ -21,6 +21,7 @@ public:
 
 	static void info(int, char *[]);
 	static void highlightText(std::string, const int);
+	static vector<std::string> stringToVector(std::string, char);
 	static vector<std::string> stringToVector(std::string);
 	static std::string vectorToString(vector<std::string>);
 	static bool ifExistsInText(std::string, std::string);
@@ -75,6 +76,21 @@ void App::highlightText(std::string text, const int color)
 	std::cout << text.c_str(); // Print colored text.
 	SetConsoleTextAttribute(hConsole, saved_colors); // Reset default color.
 
+}
+
+// Cast a string to vector of strings.
+vector<std::string> App::stringToVector(std::string string, char delim) {
+	std::stringstream ss(string.c_str());
+	std::string s;
+	vector<std::string>list;
+
+	if (string.c_str() != NULL)
+	{
+		while (std::getline(ss, s, delim)) {
+			list.push_back(s);
+		}
+	}
+	return list;
 }
 
 // Cast a string to vector of strings.

@@ -14,6 +14,7 @@ public:
 protected:
 	std::string apply(std::string, std::string);
 	std::string applyReplace(std::string, std::string, std::string);
+	std::string eraseMatch(std::string, std::string);
 
 	int matchCount = 0;
 
@@ -59,6 +60,21 @@ std::string RegularEx::applyReplace(std::string text, std::string regex, std::st
 	{
 		replaceText = formatPathForRegex(replaceText);
 		text = boost::regex_replace(text, boost::regex(regex), replaceText);
+	}
+	catch (boost::regex_error& e) {
+		// Syntax error in the regular expression
+		std::cout << ERR_REGEX << regex << endl;
+		std::cout << e.what() << endl;
+		exit;
+	}
+	return text;
+}
+
+// Erases matched text.
+std::string RegularEx::eraseMatch(std::string text, std::string regex) {
+	try
+	{
+		text = boost::regex_replace(text, boost::regex(regex), "");
 	}
 	catch (boost::regex_error& e) {
 		// Syntax error in the regular expression
