@@ -25,7 +25,7 @@ protected:
 
 private:
 	FileAccess<FileHolder> access; // Garant access to file content
-	std::string vars;
+	std::string fileContentWithoutFunction;
 
 	std::string regexToMatchFunctions = "\\*?\\w*\\(.*?\\)\\s*({(?:{[^{}]*}|.)*?})";
 	std::string regexToMatchVars = "\\$([a-zA-Z_][a-zA-Z0-9_]*)";
@@ -37,15 +37,15 @@ private:
 };
 
 std::string Matcher::matchFunctions() {
-	std::string fileToHandle = access.fileContentAccess(*access.instanceAccess());
-	std::string functions = apply(fileToHandle, regexToMatchFunctions);
+	std::string fileContentToHandle = access.fileContentAccess(*access.instanceAccess());
+	std::string functions = apply(fileContentToHandle, regexToMatchFunctions);
 
-	vars = eraseMatch(fileToHandle, regexToMatchFunctions);
+	fileContentWithoutFunction = eraseMatch(fileContentToHandle, regexToMatchFunctions);
 	return functions;
 }
 
 std::string Matcher::matchVars() {
-	return apply(vars, regexToMatchVars);
+	return apply(fileContentWithoutFunction, regexToMatchVars);
 }
 
 std::string Matcher::matchVars(std::string scope) {
